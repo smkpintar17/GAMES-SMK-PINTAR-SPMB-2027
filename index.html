@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0c1320">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>SMK PINTAR - SMK 17 MUNCAR | Petualangan Buku Pintar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- LOGIN -->
+    <section id="loginScreen" class="screen">
+      <div class="login-card">
+        <div class="logo" aria-hidden="true">📚</div>
+        <h1>SMK PINTAR</h1>
+        <h2>SMK 17 MUNCAR</h2>
+        <p class="tagline">Petualangan Mencari Buku Pintar</p>
+        <div class="auth-tabs">
+          <button id="loginTab" class="auth-tab active" type="button">Masuk</button>
+          <button id="registerTab" class="auth-tab" type="button">Daftar Peserta</button>
+        </div>
+        <form id="loginForm">
+          <label>Username</label>
+          <input id="username" type="text" autocomplete="username" placeholder="Masukkan username" required>
+          <label>Password</label>
+          <input id="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+          <button class="btn primary" type="submit">🚀 MASUK & MULAI</button>
+        </form>
+        <form id="registerForm" class="hidden">
+          <label>Nama Lengkap</label>
+          <input id="regNama" type="text" placeholder="Nama lengkap" required>
+          <label>Kelas</label>
+          <input id="regKelas" type="text" placeholder="Contoh: XI RPL" required>
+          <label>Username</label>
+          <input id="regUsername" type="text" autocomplete="username" placeholder="Buat username" minlength="3" required>
+          <label>Password</label>
+          <input id="regPassword" type="password" autocomplete="new-password" placeholder="Minimal 6 karakter" minlength="6" required>
+          <button class="btn primary" type="submit">✨ DAFTAR & MASUK</button>
+        </form>
+        <p id="loginMsg" class="message"></p>
+        <small>Demo: <b>demo</b> / <b>smkpintar</b>. Akun baru tersimpan otomatis.</small>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboardScreen" class="screen hidden">
+      <header class="topbar">
+        <div>
+          <strong>📚 SMK PINTAR</strong>
+          <span>SMK 17 MUNCAR</span>
+        </div>
+        <div class="top-actions">
+          <span id="userBadge">👤 -</span>
+          <button id="logoutBtn" class="btn danger small">Keluar</button>
+        </div>
+      </header>
+      <main class="dashboard">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">PETUALANGAN BUKU PINTAR</p>
+            <h1>Temukan Semua Buku Pengetahuan!</h1>
+            <p>Jelajahi setiap level, temukan buku, lalu jawab pertanyaan untuk membuka petualangan berikutnya.</p>
+          </div>
+          <div class="book-big">📖</div>
+        </div>
+
+        <div class="stats">
+          <div><span id="statLevel">0/9</span><small>Level Terbuka</small></div>
+          <div><span id="statBooks">0/9</span><small>Buku Ditemukan</small></div>
+          <div><span id="statScore">0</span><small>Skor</small></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="panel">
+            <h2>🗺️ Peta Petualangan</h2>
+            <div id="levelMap" class="level-map"></div>
+          </div>
+          <div class="panel">
+            <h2>👤 Profil Peserta</h2>
+            <div id="profileBox" class="profile-box"></div>
+            <button id="continueBtn" class="btn primary full">▶ Lanjutkan Petualangan</button>
+            <button id="resetBtn" class="btn secondary full">↻ Mulai Ulang Progres</button>
+          </div>
+        </div>
+
+        <div class="panel leaderboard-panel">
+          <div class="leaderboard-head"><div><h2>🏆 Papan Skor Peserta</h2><p>Skor terbaik peserta yang sudah bermain. Dapat diperbarui dari tombol Refresh.</p></div><button id="refreshLeaderboard" class="btn secondary small">↻ Refresh</button></div>
+          <div id="leaderboard" class="leaderboard"><div class="leaderboard-empty">Memuat papan skor...</div></div>
+        </div>
+      </main>
+    </section>
+
+    <!-- GAME -->
+    <section id="gameScreen" class="screen hidden">
+      <header class="gamebar">
+        <button id="backDashboard" class="btn secondary small">← Dashboard</button>
+        <div class="game-title">📚 SMK PINTAR — PETUALANGAN BUKU</div>
+        <div id="gameLevel">LEVEL 1/9</div>
+      </header>
+
+      <main class="game-layout">
+        <div class="game-panel">
+          <div class="level-heading">
+            <div>
+              <span id="levelLabel" class="level-chip">LEVEL 1</span>
+              <h1 id="levelTitle">Buku Pengetahuan</h1>
+            </div>
+            <div class="progress-wrap"><div id="progressBar" class="progress"></div></div>
+          </div>
+
+          <div id="gameCanvasWrap">
+            <canvas id="gameCanvas" width="900" height="500" role="img" aria-label="Arena permainan SMK Pintar"></canvas>
+            <div class="game-hint">⌨️ Gunakan WASD / tombol panah. Di HP, gunakan tombol sentuh. Dekati 📖 lalu tekan tombol 📖 untuk mengambil buku.</div>
+            <div class="mobile-controls" aria-label="Kontrol permainan">
+              <button data-key="ArrowUp" aria-label="Atas">▲</button>
+              <div><button data-key="ArrowLeft" aria-label="Kiri">◀</button><button data-key="Space" aria-label="Ambil buku">📖</button><button data-key="ArrowRight" aria-label="Kanan">▶</button></div>
+              <button data-key="ArrowDown" aria-label="Bawah">▼</button>
+            </div>
+          </div>
+
+          <div id="questionPanel" class="question-panel hidden">
+            <div class="question-top">
+              <span id="questionCounter">Pertanyaan</span>
+              <span id="questionType">ESAI</span>
+            </div>
+            <h2 id="questionText"></h2>
+            <div id="answerArea"></div>
+            <p id="answerMsg" class="message"></p>
+            <button id="submitAnswer" class="btn primary">✓ KIRIM JAWABAN</button>
+          </div>
+
+          <div id="levelComplete" class="complete-panel hidden">
+            <div class="complete-icon">🏆</div>
+            <h2 id="completeTitle">Level Selesai!</h2>
+            <p id="completeText"></p>
+            <button id="nextLevelBtn" class="btn primary">LEVEL BERIKUTNYA →</button>
+            <button id="finishBtn" class="btn secondary hidden">🏠 KEMBALI KE DASHBOARD</button>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="mini-card">
+            <h3>🎒 Koleksi Buku</h3>
+            <div id="bookCollection" class="book-collection"></div>
+          </div>
+          <div class="mini-card">
+            <h3>⭐ Status</h3>
+            <p>Skor: <b id="sideScore">0</b></p>
+            <p>Buku: <b id="sideBooks">0/9</b></p>
+            <p>Level: <b id="sideLevel">1/9</b></p>
+          </div>
+          <div class="mini-card">
+            <h3>💡 Petunjuk</h3>
+            <p id="hintText">Cari buku yang bercahaya di dalam arena.</p>
+          </div>
+        </aside>
+      </main>
+    </section>
+
+    <div id="toast" class="toast"></div>
+  </div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>if("serviceWorker" in navigator && location.protocol !== "file:"){navigator.serviceWorker.register("sw.js").catch(()=>{});}</script>
+</body>
+</html>

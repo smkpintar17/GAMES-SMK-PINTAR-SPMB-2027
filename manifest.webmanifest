@@ -1,0 +1,10 @@
+{
+  "name": "SMK PINTAR - SMK 17 MUNCAR",
+  "short_name": "SMK PINTAR",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070b12",
+  "theme_color": "#0c1320",
+  "orientation": "portrait-primary",
+  "description": "Games interaktif petualangan SMK PINTAR SMK 17 MUNCAR"
+}
